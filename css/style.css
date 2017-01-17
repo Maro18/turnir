@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+#vrh {
+    margin-top: 5%;
+}
+
+.radioArea {
+    margin-bottom: 25px;
+}
+
+.tip-natjecanja {
+    font-size: 1em;
+}
+
+.bodovi-field {
+    display: none;
+}
+
+.tipka {
+    margin-top: 10%;
+}
+
+.tipka button {
+    width: 80%;
+}
+.rezultat-input {
+    max-width: 40px;
+}
+.match-wrapper {
+    height: 50px!important;
+}
+.domacin {
+    padding-right: 5px;
+}
+.none {
+    display: none;
+}
+.button-group {
+    margin-top: 30px;
+}
+.block {
+    display: block;
+}
+
+#social-icons {
+    padding: 4px;
+}
+
+h1.title-text {
+    font-size: 2.2em;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.title {
+    font-weight: 600;
+    color: #5a5a5a;
+}
+
+.collection-item {
+    cursor: pointer;
+}
+
+.turnir-ikona {
+    position: absolute;
+    top: 25%;
+}
+.ko {
+    background: grey;
+}
+.domaci {
+    min-width: 20% !important;
+    font-size: 0.7em !important;
+}
