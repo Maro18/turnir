@@ -262,7 +262,7 @@ if(isset($_GET["id"])) {
                         }
                         else {
                             me.parent().fadeOut();
-                            //Stvori novi knockout
+                            location.reload();
                         }
                     });
                 }

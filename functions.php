@@ -417,6 +417,7 @@ function saveKnockoutBestOf2($id, $sud1, $sud2, $id_turnir, $id_mec, $id_sud1, $
 
         //Finale ako je(br_knockouta == br_sudionika-1)
         if ($koNumber == (int)$result->num_rows - 1) {
+            // nemam pojma zasto je $gubitnik
             $winner = $con->query("SELECT naziv FROM sudionik WHERE id_sudionik=".$gubitnik)->fetch_assoc();
             return $arr = ["mec_knockout" => -1, "winner" => $winner["naziv"]];
         }
