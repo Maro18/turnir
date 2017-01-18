@@ -103,14 +103,31 @@ if(isset($_GET["id"])) {
                     var id_match = container.attr("rel");
                     var domacinRez = container.find("input[name=domacin_bodovi]").val();
                     var gostRez = container.find("input[name=gost_bodovi]").val();
-                    if(domacinRez!=="" || domacinRez!==null || gostRez!=="" || gostRez!==null) {
+                    if(domacinRez=="" || !domacinRez || gostRez=="" || !gostRez) {
+                         swal({
+                            title: "Pogrešan unos",
+                            text: "Rezultat mora biti popunjen",
+                            type: "error",
+                            timer: 1600,
+                            showConfirmButton: false
+                         });
+                    }
+                    else if (domacinRez<0 ||  gostRez<0) {
+                        swal({
+                            title: "Pogrešan unos",
+                            text: "Rezultat mora biti pozitivan",
+                            type: "error",
+                            timer: 1600,
+                            showConfirmButton: false
+                        });
+                    }
+                    else {
                         $.ajax("savePrvenstvo.php?id="+id_match+"&domacin="+domacinRez+"&gost="+gostRez).done(function(data) {
                             if(data == 1) {
                                 swal({
                                     title: "Spremljeno!",
                                     type: "success",
-                                    confirmButtonColor: "lightblue",
-                                    timer: 1800,
+                                    timer: 1600,
                                     showConfirmButton: false
                                 });
                                 me.remove();
@@ -208,7 +225,16 @@ if(isset($_GET["id"])) {
                         showConfirmButton: false
                     });
                 }
-                else if(participant1 < 0 || participant2 <0) {
+                else if(participant1=="" || participant2=="" || !participant1 || !participant2) {
+                    swal({
+                        title: "Pogrešan unos",
+                        text: "Potrebno je unjeti sva polja.",
+                        type: "error",
+                        timer: 1400,
+                        showConfirmButton: false
+                    });
+                }
+                else if(participant1<0 || participant2<0) {
                     swal({
                         title: "Pogrešan unos",
                         text: "Nije moguce unijeti negativnu vrijednost u rezultata",
@@ -246,22 +272,21 @@ if(isset($_GET["id"])) {
                             me.parent().prev().append(matchHTML);
                         }
                         else if(json.mec_knockout==-1) {
+                            me.parent().fadeOut();
+                            $.ajax("novo/delete.php?id=" + me.parent().attr("rel")).done(function (data) {
+
+                            });
                             //Gotov je turnir --- Prikazi swal pobjednika
                             swal({
-                                    title: json.winner+" je pobjednik turnira!",
-                                    type: "success",
-                                    showConfirmButton: false,
-                                    allowEscapeKey: true,
-                                    closeOnConfirm: true },
-                                function() {
-                                    $.ajax("novo/delete.php?id=" + me.parent().attr("rel")).done(function (data) {
-                                        me.parent().remove();
-                                        Materialize.toast('Izbrisano', 2000);
-                                    });
-                                });
+                                title: json.winner+" je pobjednik turnira!",
+                                type: "success",
+                                showConfirmButton: true,
+                                allowEscapeKey: true,
+                                closeOnConfirm: true
+                            });
                         }
                         else {
-                            me.parent().fadeOut();
+                            //stvori novi KO
                             location.reload();
                         }
                     });

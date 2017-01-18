@@ -49,7 +49,7 @@ function dateToUser($date) {
 function deleteRow($table, $id) {
     $key="id_".$table;
     $con=getDB();
-    $con->query("UPDATE ".$table. " SET aktivan=0 WHERE ".$key."=".$con->real_escape_string($id));
+    $con->query("UPDATE ".$table. " SET zavrsen=1 WHERE ".$key."=".$con->real_escape_string($id));
 }
 
 function getSudionici($idTurnir) {
@@ -390,7 +390,6 @@ function saveKnockoutBestOf2($id, $sud1, $sud2, $id_turnir, $id_mec, $id_sud1, $
             $pobjednik = $id_sud2;
             $gubitnik = $id_sud1;
         }
-
         else { //drugi uvjet, usporedba golova u gostima
             if($sud1_goloviG > $sud2_goloviG) {
                 $pobjednik = $id_sud1;
@@ -411,17 +410,17 @@ function saveKnockoutBestOf2($id, $sud1, $sud2, $id_turnir, $id_mec, $id_sud1, $
         $min_ko = $row["min_id"]; // najmanji id knockouta iz turnira
 
         $result = getSudionici($id_turnir);
-        $max_ko = (int)$result->num_rows / 2; // pola od broja sudionika
 
         $koNumber = (int)$id - $min_ko + 1; //redni broj ko-a
 
         //Finale ako je(br_knockouta == br_sudionika-1)
         if ($koNumber == (int)$result->num_rows - 1) {
             // nemam pojma zasto je $gubitnik
-            $winner = $con->query("SELECT naziv FROM sudionik WHERE id_sudionik=".$gubitnik)->fetch_assoc();
+            $winner = $con->query("SELECT naziv FROM sudionik WHERE id_sudionik=".$pobjednik)->fetch_assoc();
             return $arr = ["mec_knockout" => -1, "winner" => $winner["naziv"]];
         }
 
+        $max_ko = (int)$result->num_rows / 2; // pola od broja sudionika
         $sljedeci_ko = -1;
         $brojac = 1;
         for ($i = $max_ko; $i>0; $brojac++) {
@@ -445,20 +444,20 @@ function saveKnockoutBestOf2($id, $sud1, $sud2, $id_turnir, $id_mec, $id_sud1, $
         //echo "next: $next, Sljedeci_ko: $sljedeci_ko";
         if ($result->num_rows == 0 || !$result->num_rows || !$row["id_knockout"]) {
             //ako ne postoji INSERT
-            $q = "INSERT INTO knockout VALUES(null, 0, 0, 1, " . $pobjednik . ", null, 0, $id_turnir)";
+            $q = "INSERT INTO knockout VALUES(null, 0, 0, 1, ".$pobjednik.", null, 0, $id_turnir)";
             $con->query($q);
 
             //Sudionik 1 je pobjedio, vraćam da sam napravio novi knockout (mec_knockout=1)
             return $arr = ["mec_knockout" => 1, "id" => $con->insert_id];
         } else {
             //ako postoji: sudionik2 se stavlja u sljedeci knockout
-            $q = "UPDATE knockout SET id_sudionik2=" . $pobjednik . " WHERE id_knockout=$next";
+            $q = "UPDATE knockout SET id_sudionik2=".$pobjednik." WHERE id_knockout=$next";
             $con->query($q);
             //Select id sudionika1 iz knockouta
             $sudionik = $con->query("SELECT id_sudionik1 FROM knockout where id_knockout=$next")->fetch_assoc();
             $sudionik = $sudionik["id_sudionik1"];
             //Unos meča
-            $m = "INSERT INTO mec VALUES(null, " . $id_turnir . ", " . $pobjednik . ", $sudionik, 0, 0, $next, NOW(), 1, 0)";
+            $m = "INSERT INTO mec VALUES(null, ".$id_turnir.", ".$sudionik.", $pobjednik, 0, 0, $next, NOW(), 1, 0)";
             $con->query($m);
 
             //Sudionik 1 je pobjedio, vraćam da sam napravio novi mec u novom knockoutu(mec_knockout=2)
