@@ -26,7 +26,13 @@ if(isset($_GET["user"]) && isset($_GET["email"]) && isset($_GET["pass1"]) && iss
         $ok=0;
     }
 
+    if(strlen($pass1)<6) {
+        echo "<p>Lozinka mora biti duža od 6 znakova</p>";
+        $ok=0;
+    }
+
     if($ok==1) {
+        $pass1=md5($pass1);
         $con->query("INSERT INTO korisnik VALUES(null, '$email', '$pass1', '$user', CURDATE(), 1)");
         echo 1;
     }

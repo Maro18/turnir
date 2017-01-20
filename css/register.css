@@ -1,11 +1,15 @@
-
-
 .container {
-    margin-top: 70px;
+    padding-top: 10%;
 }
 .btn {
     background: rgba(0, 143, 61, 0.88);
 }
 .btn:hover {
     background: rgba(0, 209, 88, 0.88);
+}
+#errori {
+    font-size: 1.7em;
+    font-weight: 300;
+    color: teal;
+    letter-spacing: 2px;
 }

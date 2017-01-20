@@ -20,8 +20,8 @@
 <body>
 <header>
 <nav>
-    <div class="nav-wrapper orange lighten-1">
-        <a class="brand-logo left">Logo</a>
+    <div class="nav-wrapper blue darken-2">
+        <a class="brand-logo"><img src="/images/logo.png" class="responsive-img" style="height: 55px;" alt="ScoreSheet"></a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">Pregled natjecanja</a></li>

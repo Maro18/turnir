@@ -17,7 +17,7 @@ function getUsers($cond="") {
 function validacija($email, $pass) {
     $con=getDB();
     $email=$con->real_escape_string($email);
-    $pass=$con->real_escape_string($pass);
+    $pass=md5($con->real_escape_string($pass));
     return $con->query("SELECT * FROM korisnik WHERE aktivan=1 AND email='$email' AND lozinka='$pass';");
 }
 function getTournaments() {
@@ -43,7 +43,7 @@ function dateToDB($date) {
 }
 function dateToUser($date) {
     $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-    return $date->format('d.m.Y H:i:s');
+    return $date->format('d.m.Y. H:i');
 }
 
 function deleteRow($table, $id) {

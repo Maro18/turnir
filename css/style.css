@@ -80,3 +80,7 @@ h1.title-text {
     min-width: 20% !important;
     font-size: 0.7em !important;
 }
+#results-table thead {
+    background: #0d47a1 !important;
+    color: white!important;
+}

@@ -27,7 +27,7 @@ if (isset($_SESSION["user"]))
                         <label style="color: white;" data-error="Email nije ispravan" for="email">Email</label>
                     </div>
                     <div class="input-field col s12">
-                        <input name="password" id="password" type="password" class="validate" required autocomplete="off" >
+                        <input name="password" id="password" type="password" class="validate" required autocomplete="off">
                         <label style="color: white;" for="password">Lozinka</label>
                     </div>
                     <div class="input-field col s12 m6 offset-m3">

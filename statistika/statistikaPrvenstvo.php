@@ -20,7 +20,7 @@
         ?>
         <tr rel="<?=$participant["id_sudionik"]?>">
             <td><?=$counter?></td>
-            <td><?=$participant["id_sudionik"]?></td>
+            <td><?=$participant["naziv"]?></td>
             <td><?=$participant["id_sudionik"]?></td>
             <td><?=$participant["id_sudionik"]?></td>
             <td><?=$participant["id_sudionik"]?></td>
